@@ -55,41 +55,9 @@ fprintf('\n');
 % Estimate the Hearing Loss for input [1,44,0,0,15,20,15,20,20,15,15,10]
 % Recall that the first column of X is all-ones. Thus, it does
 % not need to be normalized.
-predict = [1,44,0,0,15,20,15,20,20,15,15,10]; % give inputs here to predict
+predict = [1,69,1,1,10,10,5,10,45,50,35,30]; % give inputs here to predict
 predict = (predict .- mu) ./ sigma;
-price = sum([1 predict]' .* theta); 
+loss = sum([1 predict]' .* theta); 
 
 fprintf(['Predicted Mesured hearing loss(dB)_Y' ...
-         '(using gradient descent):\n $%f\n'], price);
-
-fprintf('Program paused. Press enter to continue.\n');
-pause;
-
-%% ================ Normal Equations ================
-
-fprintf('Solving with normal equations...\n');
-
-%% Load Data
-data = csvread('mydataset.csv');
-X = data(:, 1:12);
-y = data(:, 13);
-m = length(y);
-
-% Add intercept term to X
-X = [ones(m, 1) X];
-
-% Calculate the parameters from the normal equation
-theta = normalEqn(X, y);
-
-% Display normal equation's result
-fprintf('Theta computed from the normal equations: \n');
-fprintf(' %f \n', theta);
-fprintf('\n');
-
-
-% Estimate the Hearing Loss for input [1,44,0,0,15,20,15,20,20,15,15,10]
-predict = [1,44,0,0,15,20,15,20,20,15,15,10];
-price = sum([1 predict]' .* theta); 
-
-fprintf(['Predicted Mesured hearing loss(dB)_Y' ...
-         '(using normal equations):\n $%f\n'], price);
+         '(using gradient descent):\n $%f\n'], loss);
